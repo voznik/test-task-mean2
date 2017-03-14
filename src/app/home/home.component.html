@@ -1,0 +1,21 @@
+<div class="card" *ngIf="isLoading">
+  <h4 class="card-header">Loading...</h4>
+  <div class="card-block text-xs-center">
+    <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+  </div>
+</div>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header">Current customers ({{customers.length}})
+    <button type="button" class="btn btn-sm btn-warning float-sm-right" (click)="deleteAllCustomers()" *ngIf="customers.length"><i class="fa fa-exclamation-triangle"></i> Delete All?</button>
+    <button type="button" class="btn btn-sm btn-success float-sm-right" (click)="importCustomers()" *ngIf="!customers.length"><i class="fa fa-upload"></i> Import Demo Data</button>
+  </h4>
+  <div class="card-block">
+    <!-- <ng2-smart-table [settings]="customesTableSettings" [source]="customers" (deleteConfirm)="deleteCustomer($event)" (userRowSelect)="onSelectCustomer($event)"></ng2-smart-table> -->
+    <customers-table [customers]="customers" *ngIf="customers" (onSelectCustomer)="onSelectCustomer($event)" (onDeleteCustomer)="onDeleteCustomer($event)"></customers-table>
+  </div>
+</div>
+
+<invoices-table [invoices]="invoices" [selectedCustomer]="selectedCustomer" *ngIf="selectedCustomer.name"></invoices-table>

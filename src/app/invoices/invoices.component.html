@@ -1,0 +1,97 @@
+<div class="card">
+  <h4 class="card-header">View Inoices for customer: {{selectedCustomer.name}} </h4>
+  <div class="card-block">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Month</th>
+          <th>Minutes</th>
+          <th>Cost</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4">
+            <form #f="ngForm" novalidate>
+              <label>Select Month</label>
+              <select name="period" [(ngModel)]="period">
+                <option *ngFor="let month of availableMonths" [ngValue]="month.id">
+                  {{month.label}}
+                </option>
+              </select>
+            <!-- <form class="form-inline">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd" name="from" [(ngModel)]="dateFrom" ngbDatepicker #d="ngbDatepicker">
+                  <div class="input-group-addon" (click)="d.toggle()">
+                    <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                  </div>
+                </div>
+              </div>
+            </form> -->
+              <button class="btn btn-sm btn-primary" (click)="generateInvoice(selectedCustomer, period)"><i class="fa fa-plus"></i><span class="hidden-sm-down"> Generate</span></button>
+            </form>
+          </td>
+        </tr>
+        <tr *ngFor="let invoice of invoices; let i = index;">
+          <td>{{i+1}}</td>
+          <td>{{invoice.parking[0].timeIn | amDateFormat:'MMM'}}</td>
+          <td>{{invoice.totalMinutes}}</td>
+          <td>{{invoice.totalCost | currency:'EUR':true}}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" (click)="select(invoice)"><i class="fa fa-eye"></i><span class="hidden-sm-down"> View</span></button>
+            <button class="btn btn-sm btn-danger" (click)="delete(invoice)" [disabled]="true"><i class="fa fa-trash"></i><span class="hidden-sm-down"> Delete</span></button>
+            <!-- <app-dropdown [list]="dropdown"></app-dropdown> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card" *ngIf="selectedInvoice.num">
+  <h4 class="card-header">View parkings for Invoice: {{selectedInvoice.num}} </h4>
+  <div class="card-block">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Date</th>
+          <th>Time In</th>
+          <th>Time Out</th>
+          <th>Minutes</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let park of selectedInvoice.parking; let i = index;">
+          <td>{{i+1}}</td>
+          <td>{{park.timeIn | amDateFormat:'YYYY-MM-DD'}}</td>
+          <td>{{park.timeIn | amDateFormat:'hh:mmA'}}</td>
+          <td>{{park.timeOut | amDateFormat:'hh:mmA'}}</td>
+          <td>{{park.totalMinutes}}</td>
+          <!--  | number: '1.0-0' -->
+          <!-- <td>{{park.timeOut | amDifference: park.timeIn :'minutes' : false}}</td> -->
+          <td>{{park.totalCost | currency:'EUR':true}}</td>
+          <!--  | number: '1.0-0' -->
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">Subtotal</td>
+          <!-- sum with pipe - dom calculation -->
+          <!-- <td><strong>{{selectedInvoice.parking | sum:'totalMinutes'}}</strong></td>
+          <td><strong>{{selectedInvoice.parking | sum:'totalCost' | currency:'EUR':true}}</strong></td> -->
+          <td><strong>{{selectedInvoice.totalMinutes}}</strong></td>
+          <td><strong>{{selectedInvoice.subTotal | currency:'EUR':true}}</strong></td>
+        </tr>
+        <tr>
+          <td colspan="5">Total</td>
+          <td><strong>{{selectedInvoice.totalCost | currency:'EUR':true}}</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

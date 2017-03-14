@@ -1,0 +1,19 @@
+<table class="table table-hover table-striped table-sortable">
+  <thead>
+    <tr>
+      <!-- [class]="selectedClass(column.variable)" (click)="changeSorting(column.variable)" -->
+      <th *ngFor="let column of columns">
+        {{column.display}}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- | orderBy : convertSorting() -->
+    <tr *ngFor="let object of data">
+      <td *ngFor="let column of columns">
+        <!--  | format : column.filter -->
+        {{object[column.variable]}}
+      </td>
+    </tr>
+  </tbody>
+</table>

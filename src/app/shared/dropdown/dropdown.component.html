@@ -1,0 +1,8 @@
+<div ngbDropdown class="d-inline-block">
+  <button class="btn btn-sm btn-outline-primary" id="dropdownMenu1" ngbDropdownToggle>Dropdown</button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <button class="dropdown-item" *ngFor="let item of list" (click)="item.click()">{{item.text}}</button>
+    <!-- <button class="dropdown-item">Another Action</button>
+        <button class="dropdown-item">Something else is here</button> -->
+  </div>
+</div>

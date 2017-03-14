@@ -1,0 +1,30 @@
+<table class="table table-bordered table-striped">
+  <thead class="thead-default">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Premium</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="customers.length === 0">
+    <tr>
+      <td colspan="4"><div class="alert alert-info">There are no customers in the DB. Try to Import Demo Data</div></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr *ngFor="let customer of customers">
+      <td>{{customer.name}}</td>
+      <td>{{customer.email}}</td>
+      <td><i class="fa {{customer.premium ? 'fa-plus-square text-success' : 'fa-minus-square text-danger'}}"></i></td>
+      <td>
+        <button class="btn btn-sm btn-primary" (click)="select(customer)"><i class="fa fa-eye"></i><span class="hidden-sm-down"> View</span></button>
+        <button class="btn btn-sm btn-danger" (click)="delete(customer)"><i class="fa fa-trash"></i><span class="hidden-sm-down"> Delete</span></button>
+        <!-- <app-dropdown [list]="dropdown"></app-dropdown> -->
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- <app-table [columns]="customerColumns" [data]="customers" *ngIf="customers">
+  Loading table...
+</app-table> -->

@@ -1,0 +1,9 @@
+{
+  "globals": {
+    "moment": false,
+    "_": false,
+  },
+  "rules": {
+    "no-console": 0
+  }
+}
